@@ -1,11 +1,27 @@
 // components/JournalTemplates.jsx
 "use client";
-import React from "react";
+import html2pdf from "html2pdf.js";
+import React, { useRef } from "react";
 
 export default function JournalTemplates({ journals, setJournals }) {
+  const journalRef = useRef();
+
+  // Download Journal As Pdf
+  const downloadPDF = () => {
+    html2pdf()
+      .from(journalRef.current)
+      .set({
+        filename: "journal-entry.pdf",
+        margin: 0,
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      })
+      .save();
+  };
+  // Jsx
   return (
     <div className="space-y-8 p-6 bg-slate-900">
-      <h2 className="text-2xl font-serif font-bold mb-6 text-white">
+      <h2 className="text-2xl font-serif font-bold mb-12 text-white  text-center">
         Your Journal Collection
       </h2>
 
@@ -21,7 +37,8 @@ export default function JournalTemplates({ journals, setJournals }) {
           return (
             <div key={j.id} className="relative mb-16 mx-auto max-w-lg">
               {/* Style Selection Menu */}
-              <div className="absolute -top-10 right-0 z-20">
+              <div className="absolute -top-10 right-2 z-20 flex flex-col sm:flex-row items-end sm:items-center gap-2 sm:gap-4">
+                {/* Book style dropdown */}
                 <select
                   onChange={(e) => {
                     setJournals((prevJournals) => {
@@ -31,7 +48,7 @@ export default function JournalTemplates({ journals, setJournals }) {
                     });
                   }}
                   value={bookStyle}
-                  className="bg-slate-800 text-white border border-slate-600 rounded px-2 py-1 text-sm"
+                  className="bg-slate-800 text-white border border-slate-600 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="classic">Classic Leather</option>
                   <option value="vintage">Vintage Cloth</option>
@@ -39,11 +56,19 @@ export default function JournalTemplates({ journals, setJournals }) {
                   <option value="fantasy">Fantasy Tome</option>
                   <option value="notebook">Writer's Notebook</option>
                 </select>
+
+                {/* Download button */}
+                <button
+                  onClick={downloadPDF}
+                  className="px-2 py-1 text-xs text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition duration-200"
+                >
+                  Download PDF
+                </button>
               </div>
 
               {/* STYLE 1: CLASSIC LEATHER BOOK */}
               {bookStyle === "classic" && (
-                <>
+                <div ref={journalRef} className="mb-32">
                   {/* Book spine effect */}
                   <div
                     className="absolute left-0 top-0 bottom-0 w-8 z-10 rounded-l-lg"
@@ -64,7 +89,7 @@ export default function JournalTemplates({ journals, setJournals }) {
 
                   {/* Main book cover */}
                   <div
-                    className="p-6 rounded-lg shadow-xl transform transition-transform duration-300 hover:scale-105"
+                    className="p-6 rounded-lg shadow-xl transform transition-transform duration-300 hover:scale-105 "
                     style={{
                       background:
                         j.template === "gratitude"
@@ -157,12 +182,12 @@ export default function JournalTemplates({ journals, setJournals }) {
                       boxShadow: "1px 0 3px rgba(0,0,0,0.2)",
                     }}
                   ></div>
-                </>
+                </div>
               )}
 
               {/* STYLE 2: VINTAGE CLOTH BOUND BOOK */}
               {bookStyle === "vintage" && (
-                <>
+                <div ref={journalRef} className="mb-32">
                   {/* Book cloth texture with frayed edges */}
                   <div
                     className="relative p-8 shadow-xl transform transition-transform duration-300 hover:scale-105"
@@ -280,13 +305,14 @@ export default function JournalTemplates({ journals, setJournals }) {
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               )}
 
               {/* STYLE 3: MODERN MINIMALIST */}
               {bookStyle === "modern" && (
                 <div
-                  className="p-6 rounded-lg shadow-xl transform transition-transform duration-300 hover:-translate-y-2"
+                  ref={journalRef}
+                  className="mb-32 p-6 rounded-lg shadow-xl transform transition-transform duration-300 hover:-translate-y-2"
                   style={{
                     background:
                       j.template === "gratitude"
@@ -362,7 +388,7 @@ export default function JournalTemplates({ journals, setJournals }) {
 
               {/* STYLE 4: FANTASY TOME */}
               {bookStyle === "fantasy" && (
-                <>
+                <div ref={journalRef} className="mb-32">
                   {/* Ornate fantasy book cover */}
                   <div
                     className="relative p-8 rounded-lg shadow-xl transform transition-transform duration-300 hover:scale-105"
@@ -532,12 +558,12 @@ export default function JournalTemplates({ journals, setJournals }) {
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               )}
 
               {/* STYLE 5: WRITER'S NOTEBOOK */}
               {bookStyle === "notebook" && (
-                <>
+                <div ref={journalRef} className="mb-32">
                   {/* Spiral notebook style */}
                   <div
                     className="relative py-6 px-2 shadow-xl transform transition-transform duration-300 hover:translate-y-1"
@@ -664,7 +690,7 @@ export default function JournalTemplates({ journals, setJournals }) {
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               )}
 
               {/* Template Selection Buttons positioned at bottom of each journal */}

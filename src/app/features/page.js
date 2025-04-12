@@ -91,7 +91,12 @@ export default function Features() {
           </div>
           <div className="  h-64 md:h-96 rounded-xl shadow-2xl flex items-center justify-center text-slate-500 text-xl font-medium">
             {/* Replace with screenshot later */}
-            <img src="/3.jpg" alt="Sophia Reynolds" width={"100%"} height={"100%"} />
+            <img
+              src="/dashboard.jpeg"
+              alt="Sophia Reynolds"
+              width={"100%"}
+              height={"100%"}
+            />
           </div>
         </div>
       </section>
