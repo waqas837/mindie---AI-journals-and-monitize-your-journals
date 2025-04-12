@@ -6,6 +6,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
+import JournalTemplates from "@/components/JournalTemplates";
 
 // Toolbar component for the editor
 const MenuBar = ({ editor }) => {
@@ -224,27 +225,7 @@ export default function DashboardPage() {
 
         {/* Content based on tab */}
         {activeTab === "journals" && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold mb-2">Your Journals</h2>
-            {journals.length === 0 ? (
-              <p className="text-indigo-300">No journal entries yet.</p>
-            ) : (
-              journals.map((j) => (
-                <div
-                  key={j.id}
-                  className="bg-white/10 p-4 rounded-lg shadow border border-white/10"
-                >
-                  <div
-                    className="prose prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ __html: j.content }}
-                  />
-                  <p className="text-sm text-indigo-300 mt-2">
-                    {new Date(j.created_at).toLocaleString()}
-                  </p>
-                </div>
-              ))
-            )}
-          </div>
+          <JournalTemplates journals={journals} setJournals={setJournals} />
         )}
 
         {activeTab === "create" && (

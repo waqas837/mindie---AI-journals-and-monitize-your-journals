@@ -2,6 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Heading Overrides */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  all: unset;
+  display: block;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3rem; /* 48px */
+}
+
+h2 {
+  font-size: 2.5rem; /* 40px */
+}
+
+h3 {
+  font-size: 2rem; /* 32px */
+}
+
+h4 {
+  font-size: 1.75rem; /* 28px */
+}
+
+h5 {
+  font-size: 1.5rem; /* 24px */
+}
+
+h6 {
+  font-size: 1.25rem; /* 20px */
+}
 /* Define scrollbar colors and dimensions using CSS variables */
 :root {
   --scrollbar-width: 10px;
